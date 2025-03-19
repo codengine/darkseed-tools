@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TosText", "TosText\TosText.csproj", "{13F1F8FB-B359-4963-9C04-54BB3C4D68B4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TosSprites", "TosSprites\TosSprites.csproj", "{2BB8F15A-8041-496E-AD3C-9E681B99CF30}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{13F1F8FB-B359-4963-9C04-54BB3C4D68B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{13F1F8FB-B359-4963-9C04-54BB3C4D68B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{13F1F8FB-B359-4963-9C04-54BB3C4D68B4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2BB8F15A-8041-496E-AD3C-9E681B99CF30}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2BB8F15A-8041-496E-AD3C-9E681B99CF30}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2BB8F15A-8041-496E-AD3C-9E681B99CF30}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2BB8F15A-8041-496E-AD3C-9E681B99CF30}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

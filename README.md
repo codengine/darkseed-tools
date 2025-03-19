@@ -9,7 +9,7 @@ Reads and writes TOSTEXT.BIN.
 #### Extract texts
 
 Usage:
-`TosText.exe extract`
+`TosText.exe extract -i "C:\DARKSEED\TOSTEXT.BIN" -o "C:\DARKSEED\TOSTEXT.TXT"`
 
 ```
 
@@ -27,10 +27,9 @@ Usage:
 #### Rebuild TOSTEXT.BIN
 
 Usage:
-`TosText.exe rebuild`
+`TosText.exe rebuild -i "C:\DARKSEED\TOSTEXT.TXT" -o "C:\DARKSEED\TOSTEXT.BIN"`
 
 ```
-
   -i, --in     Required. Path to input (txt) file
 
   -o, --out    Required. Path to output (bin) file
@@ -40,4 +39,39 @@ Usage:
   --help       Display this help screen.
 
   --version    Display version information.
+```
+
+
+## TosSprite
+
+Reads and writes sprites from and to .NSP files.
+
+#### Extract sprites
+
+Usage:
+`TosSprites.exe extract -i "C:\DARKSEED\CPLAYER.NSP" -o "C:\DARKSEED\out"`
+
+```
+  -i, --in     Required. Path to the input file
+
+  -o, --out    Required. Path where the gif files are stored
+
+  --help       Display this help screen.
+
+  --version    Display version information.
+```
+
+#### Rebuild TOSTEXT.BIN
+
+If the sprites are stored at CPLAYER_0.gif, CPLAYER_1.gif and so on, the prefix would be "CPLAYER".
+
+Usage:
+`TosSprites.exe rebuild -i "C:\DARKSEED\out" -o "C:\DARKSEED\CPLAYER.NSP" -o "CPLAYER"`
+
+```
+  -i, --in        Required. Path to input files
+
+  -p, --prefix    Required. Input filename prefix
+
+  -o, --out       Required. Path to output file
 ```
