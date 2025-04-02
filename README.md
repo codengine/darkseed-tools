@@ -45,6 +45,7 @@ Usage:
 ## TosSprite
 
 Reads and writes sprites from and to .NSP files. An empty sprite is saved as a 1x1 transparent pixel.
+
 Please take care about the color palette and disable dithering / antialiasing and so on that may lead to pixels that are not on the default palette.
 
 #### Extract sprites
