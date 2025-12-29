@@ -1,0 +1,105 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "*"
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: Build assets (${{ matrix.rid }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            rid: linux-x64
+          - os: windows-latest
+            rid: win-x64
+          - os: windows-latest
+            rid: win-x86
+          - os: macos-latest
+            rid: osx-x64
+          - os: macos-latest
+            rid: osx-arm64
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+          cache: true
+          cache-dependency-path: |
+            **/*.csproj
+
+      - name: Restore
+        run: dotnet restore DarkSeedTools.sln
+
+      - name: Publish (Linux/macOS)
+        if: runner.os != 'Windows'
+        env:
+          RID: ${{ matrix.rid }}
+        run: |
+          set -euo pipefail
+          rm -rf dist
+          dotnet publish TosText/TosText.csproj -c Release -r "$RID" --self-contained false -o "dist/$RID/tos-text"
+          dotnet publish TosSprites/TosSprites.csproj -c Release -r "$RID" --self-contained false -o "dist/$RID/tos-sprites"
+
+      - name: Package (Linux/macOS)
+        if: runner.os != 'Windows'
+        env:
+          RID: ${{ matrix.rid }}
+        run: |
+          set -euo pipefail
+          cd "dist/$RID"
+          zip -r "../../darkseed-tools-$RID.zip" .
+
+      - name: Publish (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        env:
+          RID: ${{ matrix.rid }}
+        run: |
+          Remove-Item -Recurse -Force dist -ErrorAction SilentlyContinue
+          dotnet publish TosText/TosText.csproj -c Release -r $env:RID --self-contained false -o dist/$env:RID/tos-text
+          dotnet publish TosSprites/TosSprites.csproj -c Release -r $env:RID --self-contained false -o dist/$env:RID/tos-sprites
+
+      - name: Package (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        env:
+          RID: ${{ matrix.rid }}
+        run: |
+          Compress-Archive -Path dist/$env:RID/* -DestinationPath darkseed-tools-$env:RID.zip -Force
+
+      - name: Upload asset artifact
+        uses: actions/upload-artifact@v6
+        with:
+          name: release-asset-${{ matrix.rid }}
+          path: darkseed-tools-${{ matrix.rid }}.zip
+
+  release:
+    name: Create GitHub Release
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - name: Download assets
+        uses: actions/download-artifact@v7
+        with:
+          path: release-assets
+          merge-multiple: true
+
+      - name: Publish GitHub release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: release-assets/*.zip
+          fail_on_unmatched_files: true
+          generate_release_notes: true
