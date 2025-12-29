@@ -128,11 +128,6 @@ public static class Converter
     {
         if (color.A == 0) return Sprite.TransparentPixel;
         
-        if (ColorToIndexMap.TryGetValue((color.R, color.G, color.B), out var index))
-        {
-            return index;
-        }
-        
-        throw new Exception($"No exact color match found for RGB({color.R},{color.G},{color.B}) at position ({x},{y}) in file {Path.GetFileName(filePath)}");
+        return ColorToIndexMap.TryGetValue((color.R, color.G, color.B), out var index) ? index : throw new Exception($"No exact color match found for RGB({color.R},{color.G},{color.B}) at position ({x},{y}) in file {Path.GetFileName(filePath)}");
     }
 }

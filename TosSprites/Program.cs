@@ -5,31 +5,6 @@ namespace TosSprites;
 
 internal abstract class Program
 {
-    // Extract operation class
-    [Verb("convert", HelpText = "Convert a .NSP file to .gif files")]
-    public class ConvertOptions
-    {
-        [Option('i', "in", Required = true, HelpText = "Path to the input file")]
-        public string InputPath { get; set; }
-        
-        [Option('o', "out", Required = true, HelpText = "Path where the gif files are stored")]
-        public string OutputPath { get; set; }
-    }
-
-    // Rebuild operation class
-    [Verb("rebuild", HelpText = "Rebuild .gif files to an .NSP file")]
-    public class RebuildOptions
-    {
-        [Option('i', "in", Required = true, HelpText = "Path to input files")]
-        public string InputPath { get; set; }
-        
-        [Option('p', "prefix", Required = true, HelpText = "Input filename prefix")]
-        public string InputFilePrefix { get; set; }
-        
-        [Option('o', "out", Required = true, HelpText = "Path to output file")]
-        public string OutputFile { get; set; }
-    }
-    
     private static int Main(string[] args)
     {
         return Parser.Default.ParseArguments<ConvertOptions, RebuildOptions>(args)

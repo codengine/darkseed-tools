@@ -5,14 +5,14 @@ namespace DarkSeedTools;
 public static class TosTextUtility
 {
     // Reads a 16-bit unsigned integer in little-endian format
-    public static ushort ReadUInt16LE(BinaryReader reader)
+    public static ushort ReadUInt16Le(BinaryReader reader)
     {
         var bytes = reader.ReadBytes(2);
         return (ushort)(bytes[0] | (bytes[1] << 8));
     }
 
     // Writes a 16-bit unsigned integer in little-endian format
-    public static void WriteUInt16LE(BinaryWriter writer, ushort value)
+    public static void WriteUInt16Le(BinaryWriter writer, ushort value)
     {
         writer.Write((byte)(value & 0xFF));
         writer.Write((byte)((value >> 8) & 0xFF));
